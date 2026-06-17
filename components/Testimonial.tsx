@@ -8,7 +8,15 @@ import {
   Film,
   Camera,
   PlayCircle,
+  Globe,
+  Users,
+  Clapperboard,
+  CheckCircle2,
+  ArrowRight,
+  Trophy,
+  Heart,
 } from "lucide-react";
+import Link from "next/link";
 
 export interface TestimonialItem {
   id: number;
@@ -17,6 +25,8 @@ export interface TestimonialItem {
   company?: string;
   quote: string;
   rating?: number;
+  featured?: boolean;
+  location?: string;
 }
 
 interface TestimonialProps {
@@ -31,15 +41,18 @@ const defaultTestimonials: TestimonialItem[] = [
     name: "Sarah Mitchell",
     role: "Documentary Producer",
     company: "Creative Vision Studios",
+    location: "United Kingdom",
     quote:
       "Soulfire Chronicles Production understands the power of storytelling. Their ability to transform ideas into cinematic experiences is truly remarkable.",
     rating: 5,
+    featured: true,
   },
   {
     id: 2,
     name: "David Thompson",
     role: "Creative Director",
     company: "Global Media Network",
+    location: "United States",
     quote:
       "Professional, visionary, and deeply committed to meaningful storytelling. Every project reflects passion and exceptional attention to detail.",
     rating: 5,
@@ -49,6 +62,7 @@ const defaultTestimonials: TestimonialItem[] = [
     name: "Emily Rodriguez",
     role: "Film Consultant",
     company: "Independent Filmmaker",
+    location: "Canada",
     quote:
       "Working with Soulfire Chronicles Production was an inspiring experience. Their documentaries connect emotionally while maintaining cinematic excellence.",
     rating: 5,
@@ -58,6 +72,7 @@ const defaultTestimonials: TestimonialItem[] = [
     name: "Michael Anderson",
     role: "Executive Producer",
     company: "Storyline Productions",
+    location: "Australia",
     quote:
       "A rare combination of creativity, authenticity, and technical expertise. Their storytelling approach leaves a lasting impact on audiences.",
     rating: 5,
@@ -67,6 +82,7 @@ const defaultTestimonials: TestimonialItem[] = [
     name: "Jennifer Collins",
     role: "Media Strategist",
     company: "Creative Impact Agency",
+    location: "Germany",
     quote:
       "Soulfire Chronicles Production delivers meaningful narratives that inspire, educate, and connect people through the power of film.",
     rating: 5,
@@ -76,38 +92,65 @@ const defaultTestimonials: TestimonialItem[] = [
     name: "Robert Evans",
     role: "Documentary Enthusiast",
     company: "Audience Member",
+    location: "New Zealand",
     quote:
       "The stories they tell feel authentic and deeply human. Their work reminds us why storytelling matters.",
+    rating: 5,
+  },
+  {
+    id: 7,
+    name: "Olivia Parker",
+    role: "Creative Producer",
+    company: "Visionary Films",
+    location: "Ireland",
+    quote:
+      "Exceptional storytelling, outstanding visuals, and a powerful emotional connection with audiences.",
+    rating: 5,
+  },
+  {
+    id: 8,
+    name: "James Walker",
+    role: "Research Director",
+    company: "Global Research Films",
+    location: "Singapore",
+    quote:
+      "One of the most inspiring creative teams we have worked with in recent years.",
     rating: 5,
   },
 ];
 
 export default function Testimonial({
-  title = "What People Say",
-  subtitle = "Trusted by storytellers, filmmakers, creatives, and audiences who believe in the transformative power of meaningful storytelling.",
+  title = "Voices From Around The World",
+  subtitle = "Discover what filmmakers, producers, creatives, researchers, and audiences say about Soulfire Chronicles Production.",
   testimonials = defaultTestimonials,
 }: TestimonialProps) {
+  const averageRating =
+    testimonials.reduce(
+      (acc, item) => acc + (item.rating || 5),
+      0
+    ) / testimonials.length;
+
   return (
-    <section className="relative overflow-hidden py-24 bg-black text-white">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#f59e0b10,transparent_60%)]" />
+    <section className="relative overflow-hidden bg-black py-32 text-white">
+      {/* Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#f59e0b15,transparent_60%)]" />
 
-      <div className="absolute left-0 top-0 h-80 w-80 rounded-full bg-amber-500/5 blur-3xl" />
+      <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-amber-500/5 blur-3xl" />
 
-      <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-yellow-500/5 blur-3xl" />
+      <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-yellow-500/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Section Header */}
-        <div className="mb-20 text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-5 py-2">
-            <Sparkles className="h-4 w-4 text-amber-400" />
 
-            <span className="text-sm uppercase tracking-[0.2em] text-amber-300">
+        {/* Header */}
+        <div className="mb-20 text-center">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-5 py-2">
+            <Sparkles className="h-4 w-4 text-amber-400" />
+            <span className="text-sm uppercase tracking-[0.3em] text-amber-300">
               Testimonials
             </span>
           </div>
 
-          <h2 className="mx-auto max-w-4xl text-4xl font-bold md:text-6xl">
+          <h2 className="mx-auto max-w-5xl text-5xl font-bold md:text-7xl">
             {title}
           </h2>
 
@@ -116,82 +159,131 @@ export default function Testimonial({
           </p>
         </div>
 
-        {/* Testimonial Grid */}
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        {/* Review Summary */}
+        <div className="mb-20 grid gap-8 md:grid-cols-4">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
+            <Star className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+            <h3 className="text-5xl font-bold text-amber-400">
+              {averageRating.toFixed(1)}
+            </h3>
+            <p className="mt-3 text-gray-400">
+              Average Rating
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
+            <Users className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+            <h3 className="text-5xl font-bold text-amber-400">
+              100+
+            </h3>
+            <p className="mt-3 text-gray-400">
+              Creative Collaborations
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
+            <Globe className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+            <h3 className="text-5xl font-bold text-amber-400">
+              Global
+            </h3>
+            <p className="mt-3 text-gray-400">
+              Audience Vision
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
+            <Trophy className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+            <h3 className="text-5xl font-bold text-amber-400">
+              100%
+            </h3>
+            <p className="mt-3 text-gray-400">
+              Storytelling Passion
+            </p>
+          </div>
+        </div>
+
+        {/* Featured Spotlight */}
+        <div className="mb-20 rounded-[32px] border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-black p-12">
+          <Quote className="mb-8 h-16 w-16 text-amber-400" />
+
+          <blockquote className="max-w-5xl text-3xl font-medium leading-relaxed">
+            "Soulfire Chronicles Production creates stories that remain
+            in the hearts of audiences long after the screen fades to
+            black. Their work blends authenticity, creativity, and
+            cinematic excellence into something truly unforgettable."
+          </blockquote>
+
+          <div className="mt-10">
+            <h3 className="text-xl font-bold">
+              Sophia Bennett
+            </h3>
+
+            <p className="text-amber-400">
+              Story Consultant • Narrative Works
+            </p>
+          </div>
+        </div>
+
+        {/* Testimonials Grid */}
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="
-                group
-                relative
-                overflow-hidden
-                rounded-3xl
-                border
-                border-white/10
-                bg-white/[0.03]
-                p-8
-                transition-all
-                duration-500
-                hover:-translate-y-2
-                hover:border-amber-500/30
-              "
+              className="group rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:-translate-y-2 hover:border-amber-500/30"
             >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-yellow-500/5" />
+              <div className="mb-6 flex items-center justify-between">
+                <Quote className="h-8 w-8 text-amber-400" />
+
+                {testimonial.featured && (
+                  <span className="rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-black">
+                    Featured
+                  </span>
+                )}
               </div>
 
-              {/* Quote Icon */}
-              <div className="relative z-10 mb-6">
-                <div className="inline-flex rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <Quote className="h-8 w-8 text-amber-400" />
-                </div>
+              <div className="mb-5 flex gap-1">
+                {[...Array(testimonial.rating || 5)].map(
+                  (_, index) => (
+                    <Star
+                      key={index}
+                      className="h-4 w-4 fill-amber-400 text-amber-400"
+                    />
+                  )
+                )}
               </div>
 
-              {/* Rating */}
-              <div className="relative z-10 mb-6 flex gap-1">
-                {[...Array(testimonial.rating || 5)].map((_, index) => (
-                  <Star
-                    key={index}
-                    className="h-4 w-4 fill-amber-400 text-amber-400"
-                  />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <blockquote className="relative z-10 mb-8 text-gray-300 leading-8">
+              <p className="mb-8 leading-8 text-gray-300">
                 "{testimonial.quote}"
-              </blockquote>
+              </p>
 
-              {/* Author */}
-              <div className="relative z-10 border-t border-white/10 pt-6">
-                <h3 className="text-lg font-semibold">
+              <div className="border-t border-white/10 pt-5">
+                <h4 className="font-semibold">
                   {testimonial.name}
-                </h3>
+                </h4>
 
-                <p className="mt-1 text-amber-400">
+                <p className="text-amber-400">
                   {testimonial.role}
                 </p>
 
-                {testimonial.company && (
-                  <p className="mt-1 text-sm text-gray-500">
-                    {testimonial.company}
-                  </p>
-                )}
+                <p className="text-sm text-gray-500">
+                  {testimonial.company}
+                </p>
+
+                <p className="mt-2 text-xs text-gray-600">
+                  {testimonial.location}
+                </p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Statistics */}
+        {/* Achievements */}
         <div className="mt-24 grid gap-8 md:grid-cols-4">
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
             <Film className="mx-auto mb-4 h-10 w-10 text-amber-400" />
-
             <h3 className="text-4xl font-bold text-amber-400">
               10+
             </h3>
-
             <p className="mt-3 text-gray-400">
               Documentary Projects
             </p>
@@ -199,11 +291,9 @@ export default function Testimonial({
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
             <Award className="mx-auto mb-4 h-10 w-10 text-amber-400" />
-
             <h3 className="text-4xl font-bold text-amber-400">
               100%
             </h3>
-
             <p className="mt-3 text-gray-400">
               Original Storytelling
             </p>
@@ -211,11 +301,9 @@ export default function Testimonial({
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
             <Camera className="mx-auto mb-4 h-10 w-10 text-amber-400" />
-
             <h3 className="text-4xl font-bold text-amber-400">
               Creative
             </h3>
-
             <p className="mt-3 text-gray-400">
               Production Excellence
             </p>
@@ -223,30 +311,73 @@ export default function Testimonial({
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center">
             <PlayCircle className="mx-auto mb-4 h-10 w-10 text-amber-400" />
-
             <h3 className="text-4xl font-bold text-amber-400">
               Global
             </h3>
-
             <p className="mt-3 text-gray-400">
               Audience Vision
             </p>
           </div>
         </div>
 
-        {/* Bottom Quote */}
-        <div className="mt-24 rounded-3xl border border-white/10 bg-white/[0.03] p-12 text-center">
-          <Quote className="mx-auto mb-6 h-12 w-12 text-amber-400" />
+        {/* Trust Section */}
+        <div className="mt-24 rounded-[32px] border border-white/10 bg-white/[0.03] p-12">
+          <div className="grid gap-10 md:grid-cols-3">
+            <div className="text-center">
+              <CheckCircle2 className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+              <h3 className="mb-3 text-xl font-bold">
+                Trusted Storytelling
+              </h3>
+              <p className="text-gray-400">
+                Authentic stories built on research, creativity,
+                and human connection.
+              </p>
+            </div>
 
-          <blockquote className="mx-auto max-w-4xl text-2xl font-medium leading-relaxed text-gray-200">
-            “Stories have the ability to change perspectives,
-            inspire action, and connect people through shared
-            human experiences.”
-          </blockquote>
+            <div className="text-center">
+              <Clapperboard className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+              <h3 className="mb-3 text-xl font-bold">
+                Cinematic Quality
+              </h3>
+              <p className="text-gray-400">
+                Professional filmmaking standards across every
+                production.
+              </p>
+            </div>
 
-          <p className="mt-6 text-amber-400">
-            Soulfire Chronicles Production
+            <div className="text-center">
+              <Heart className="mx-auto mb-4 h-10 w-10 text-amber-400" />
+              <h3 className="mb-3 text-xl font-bold">
+                Human Impact
+              </h3>
+              <p className="text-gray-400">
+                Stories designed to inspire, educate, and create
+                meaningful conversations.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-24 text-center">
+          <h2 className="mb-6 text-5xl font-bold">
+            Ready To Tell Your Story?
+          </h2>
+
+          <p className="mx-auto mb-10 max-w-3xl text-lg text-gray-400">
+            Partner with Soulfire Chronicles Production and create
+            documentaries, films, and visual experiences that leave
+            a lasting impact.
           </p>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-3 rounded-xl bg-amber-500 px-8 py-4 font-semibold text-black transition hover:bg-amber-400"
+          >
+            Start Your Project
+
+            <ArrowRight className="h-5 w-5" />
+          </Link>
         </div>
       </div>
     </section>
