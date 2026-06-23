@@ -80,33 +80,28 @@ export default function Navbar() {
         className={`
           fixed top-0 left-0 right-0 z-50
           transition-all duration-500
-          ${
-            scrolled
-              ? "backdrop-blur-xl bg-black/80 border-b border-white/10"
-              : "bg-transparent"
+          ${scrolled
+            ? "backdrop-blur-xl bg-black/80 border-b border-white/10"
+            : "bg-transparent"
           }
         `}
       >
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            <Link
-              href="/"
-              className="group flex items-center gap-4"
-            >
+            <Link href="/" className="group flex items-center gap-4">
               <div
                 className="
-                  flex h-12 w-12 items-center justify-center
-                  rounded-xl
-                  bg-gradient-to-br
-                  from-amber-400
-                  to-yellow-500
-                  text-black
-                  shadow-lg
-                  shadow-amber-500/20
-                "
+      flex h-12 w-12 items-center justify-center
+      overflow-hidden rounded-xl
+      shadow-lg shadow-amber-500/20
+    "
               >
-                <Film className="h-6 w-6" />
+                <img
+                  src="/logo.png"
+                  alt="Soulfire Chronicles Production Logo"
+                  className="h-full w-full object-cover"
+                />
               </div>
 
               <div>
@@ -116,11 +111,11 @@ export default function Navbar() {
 
                 <p
                   className="
-                    text-[10px]
-                    uppercase
-                    tracking-[0.35em]
-                    text-amber-400
-                  "
+        text-[10px]
+        uppercase
+        tracking-[0.35em]
+        text-amber-400
+      "
                 >
                   Chronicles Production
                 </p>
@@ -143,10 +138,9 @@ export default function Navbar() {
                       rounded-lg
                       text-sm font-medium
                       transition-all duration-300
-                      ${
-                        isActive
-                          ? "text-amber-400"
-                          : "text-gray-300 hover:text-white"
+                      ${isActive
+                        ? "text-amber-400"
+                        : "text-gray-300 hover:text-white"
                       }
                     `}
                   >
@@ -271,10 +265,9 @@ export default function Navbar() {
                       py-4
                       transition-all
                       duration-300
-                      ${
-                        isActive
-                          ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                          : "bg-white/5 border border-white/5 text-gray-300"
+                      ${isActive
+                        ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                        : "bg-white/5 border border-white/5 text-gray-300"
                       }
                     `}
                   >
